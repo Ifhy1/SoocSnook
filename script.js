@@ -12,16 +12,37 @@ let timeLeft = 30;
 const scoreDisplay = document.getElementById('score');
 const timeDisplay = document.getElementById('time');
 
-// Sound effect
-const hitSound = new Audio('hit.mp3'); // make sure this file exists in your project folder
+// Sound effect (optional: place a hit.mp3 file in your folder)
+const hitSound = new Audio('hit.mp3');
 
-// Mouse events
-document.addEventListener('mousedown', () => isAiming = true);
-document.addEventListener('mouseup', shootBall);
-document.addEventListener('mousemove', e => {
+// Mouse controls
+canvas.addEventListener('mousedown', () => isAiming = true);
+canvas.addEventListener('mouseup', shootBall);
+canvas.addEventListener('mousemove', e => {
   const rect = canvas.getBoundingClientRect();
   mouse.x = e.clientX - rect.left;
   mouse.y = e.clientY - rect.top;
+});
+
+// Touch controls
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  isAiming = true;
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.touches[0].clientX - rect.left;
+  mouse.y = e.touches[0].clientY - rect.top;
+});
+
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.touches[0].clientX - rect.left;
+  mouse.y = e.touches[0].clientY - rect.top;
+});
+
+canvas.addEventListener('touchend', e => {
+  e.preventDefault();
+  shootBall();
 });
 
 function shootBall() {
@@ -98,7 +119,7 @@ const countdown = setInterval(() => {
   }
 }, 1000);
 
-// Moving red ball every 3 seconds
+// Red ball movement every 3 seconds
 setInterval(() => {
   redBall.x = 100 + Math.random() * 400;
   redBall.y = 50 + Math.random() * 150;

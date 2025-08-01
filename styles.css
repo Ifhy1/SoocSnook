@@ -16,4 +16,5 @@ h1 {
   background-color: #006400; /* Green snooker table */
   display: block;
   margin: 20px auto;
+  touch-action: none; /* Prevents default scrolling on touch devices */
 }
